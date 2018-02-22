@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FoodTruckMvc.Models.AppointmentModel>
+
+@{
+    ViewData["Title"] = "Schedules";
+}
+
+<h2>Food Truck Schedules</h2>
+
+    
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LocationId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FoodTruckId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink($"{item.Location.StreetAddress} {item.Location.City} {item.Location.State}", "Details", "Locations", new { id=item.Location.LocationId })
+            </td>
+            <td>
+                @Html.ActionLink($"{item.FoodTruck.Name}", "Details", "FoodTrucks", new { id=item.FoodTruck.FoodTruckId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
