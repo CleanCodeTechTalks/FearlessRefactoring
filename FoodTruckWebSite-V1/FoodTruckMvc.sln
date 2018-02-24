@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckMvc", "FoodTruckMvc\FoodTruckMvc.csproj", "{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckMvc.Test", "FoodTruckMvc.Test\FoodTruckMvc.Test.csproj", "{267410AB-1374-4C66-9E06-D3ABB12F9A82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,12 +18,6 @@ Global
 		{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.David|Any CPU.ActiveCfg = David|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.David|Any CPU.Build.0 = David|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{267410AB-1374-4C66-9E06-D3ABB12F9A82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
