@@ -1,0 +1,59 @@
+using FoodTruckMvc.Geocoder;
+using FoodTruckMvc.Models;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using Xunit;
+
+namespace FoodTruckMvcTests
+{
+    public class GoogleGeocoderTests
+    {
+        public GoogleGeocoderTests()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            this.Configuration = builder.Build();
+        }
+
+        private IConfiguration Configuration;
+
+        [Fact]
+        public void GetGeocodeDoesNotFindInvalidAddress()
+        {
+            var location = new LocationModel()
+            {
+                StreetAddress = "1313 Mockingbird Ln",
+                City = "Keflavik",
+                State = "CZ",
+                ZipCode = "98765"
+            };
+            var geocoder = new GoogleGeocoder(Configuration);
+
+            var geocode = geocoder.GetGeocodeAsync(location).Result;
+
+            Assert.Equal(0, geocode.results.Count);
+        }
+
+        [Fact]
+        public void GetGeocodeFindsValidAddress()
+        {
+            var location = new LocationModel()
+            {
+                StreetAddress = "777 E Wisconsin Ave",
+                City = "Milwaukee",
+                State = "WI",
+                ZipCode = "53202"
+            };
+            var geocoder = new GoogleGeocoder(Configuration);
+
+            var geocode = geocoder.GetGeocodeAsync(location).Result;
+
+            Assert.Equal(1, geocode.results.Count);
+        }
+    }
+}
