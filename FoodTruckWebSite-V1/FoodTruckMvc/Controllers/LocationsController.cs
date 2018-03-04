@@ -15,13 +15,12 @@ namespace FoodTruckMvc.Controllers
 
         public LocationsController(IConfiguration configuration, FoodTruckContext foodTruckContext)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
             this.locationRepository = new LocationRepository(foodTruckContext);
         }
 
-        private IConfiguration configuration;
+        private IConfiguration Configuration;
         private LocationRepository locationRepository;
-
 
         // GET: Locations
         public ActionResult Index()
@@ -59,16 +58,17 @@ namespace FoodTruckMvc.Controllers
         {
             try
             {
-                var apiKey = configuration["AppSettings:googleMapsApiKey"];
+                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
                 var httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
                 var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
                 var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
-                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(response.Content.ReadAsStringAsync().Result);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
 
                 if (geocodeResult.results.Count == 0)
                 {
-                    ViewBag.Error = "This address could not be found.  Please check this address and try again!";
+                    ViewBag.Error = "This address could not be found. Please check this address and try again!";
                     return View(location);
                 }
 
@@ -77,7 +77,7 @@ namespace FoodTruckMvc.Controllers
                 var existingAddres = locationRepository.GetLocationByFormattedAddress(formattedAddress);
                 if (existingAddres != null)
                 {
-                    ViewBag.Error = "The given address already exists.  Enter a new address";
+                    ViewBag.Error = "The given address already exists. Enter a new address";
                     return View(location);
                 }
 
@@ -118,23 +118,24 @@ namespace FoodTruckMvc.Controllers
 
                 if (current == null)
                 {
-                    ViewBag["Error"] = $"No location with id {id} exists.  Please select a different location to edit";
+                    ViewBag["Error"] = $"No location with id {id} exists. Please select a different location to edit";
                     return RedirectToAction(nameof(Index));
                 }
 
-                var apiKey = configuration["AppSettings:googleMapsApiKey"];
+                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
                 var httpClient = new HttpClient();
                 httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
                 var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
                 var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
-                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(response.Content.ReadAsStringAsync().Result);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
 
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
                 var existingAddres = locationRepository.GetLocationByFormattedAddress(formattedAddress);
                 if (existingAddres != null)
                 {
-                    ViewBag["Error"] = "The given address already exists.  Enter a new address";
+                    ViewBag["Error"] = "The given address already exists. Enter a new address";
                     return View(location);
                 }
 
@@ -154,6 +155,5 @@ namespace FoodTruckMvc.Controllers
                 return View(location);
             }
         }
-
     }
 }
