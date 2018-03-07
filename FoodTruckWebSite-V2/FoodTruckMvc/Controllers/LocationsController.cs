@@ -1,5 +1,4 @@
 ﻿using FoodTruckMvc.Data;
-using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

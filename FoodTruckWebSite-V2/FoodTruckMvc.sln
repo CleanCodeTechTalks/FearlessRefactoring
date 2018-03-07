@@ -5,7 +5,12 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckMvc", "FoodTruckMvc\FoodTruckMvc.csproj", "{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckMvcTests", "FoodTruckMvcTests\FoodTruckMvcTests.csproj", "{AFA5F3CD-471A-4EDC-A1B0-599812CDEA22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckMvcTests", "FoodTruckMvcTests\FoodTruckMvcTests.csproj", "{AFA5F3CD-471A-4EDC-A1B0-599812CDEA22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E164BBC-E920-4E88-9063-1E3595FEFB2E}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.V2.txt = ReadMe.V2.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
