@@ -9,9 +9,9 @@ using Xunit;
 
 namespace FoodTruckMvcTests
 {
-    public class LocationsControllerTests
+    public class LocationsControllerCreateTests
     {
-        public LocationsControllerTests()
+        public LocationsControllerCreateTests()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -22,7 +22,6 @@ namespace FoodTruckMvcTests
             this.Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
-            optionsBuilder.UseSqlServer<FoodTruckContext>(Configuration.GetConnectionString("FoodTruckConnectionString"));
 
             Context = new FoodTruckContext(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("FoodTruckConnectionString")).Options);
         }
@@ -37,6 +36,7 @@ namespace FoodTruckMvcTests
 
             var location = new LocationModel()
             {
+                Name = "Imaginary Spot",
                 StreetAddress = "1313 Mockingbird Ln",
                 City = "Keflavik",
                 State = "CZ",
@@ -44,7 +44,27 @@ namespace FoodTruckMvcTests
             };
             var result = locationsController.Create(location).Result as ViewResult;
 
-            Assert.Equal("This address could not be found. Please check this address and try again!", result.ViewData["Error"]);
+            Assert.Equal("This address could not be found. Please check this address and try again!",
+                         result.ViewData["Error"]);
+        }
+
+        [Fact]
+        public void LocationsControllerShouldNotPersistTheSameLocationTwice()
+        {
+            var locationsController = new LocationsController(Configuration, Context);
+            var location = new LocationModel()
+            {
+                Name = "Prime Spot",
+                StreetAddress = "777 E Wisconsin Ave",
+                City = "Milwaukee",
+                State = "WI",
+                ZipCode = "53202"
+            };
+            var result = locationsController.Create(location).Result as ViewResult;
+            result = locationsController.Create(location).Result as ViewResult;
+
+            Assert.Equal("The given address already exists. Enter a new address",
+                         result.ViewData["Error"]);
         }
     }
 }

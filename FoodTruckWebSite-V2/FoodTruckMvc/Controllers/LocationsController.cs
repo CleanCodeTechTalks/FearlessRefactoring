@@ -12,7 +12,6 @@ namespace FoodTruckMvc.Controllers
 {
     public class LocationsController : Controller
     {
-
         public LocationsController(IConfiguration configuration, FoodTruckContext foodTruckContext)
         {
             this.Configuration = configuration;
