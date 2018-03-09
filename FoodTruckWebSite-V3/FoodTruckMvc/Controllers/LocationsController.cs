@@ -1,5 +1,4 @@
 ﻿using FoodTruckMvc.Data;
-using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,16 +12,13 @@ namespace FoodTruckMvc.Controllers
 {
     public class LocationsController : Controller
     {
-
-        public LocationsController(IConfiguration configuration, IGeocoder geocoder, FoodTruckContext foodTruckContext)
+        public LocationsController(IConfiguration configuration, FoodTruckContext foodTruckContext)
         {
             this.Configuration = configuration;
-            this.geocoder = geocoder;
             this.locationRepository = new LocationRepository(foodTruckContext);
         }
 
         private IConfiguration Configuration;
-        private readonly IGeocoder geocoder;
         private LocationRepository locationRepository;
 
         // GET: Locations
@@ -61,7 +57,13 @@ namespace FoodTruckMvc.Controllers
         {
             try
             {
-                var geocodeResult = await geocoder.GetGeocodeAsync(location);
+                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
+                var httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
+                var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
+                var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
+                var responseString = await response.Content.ReadAsStringAsync();
+                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
 
                 if (geocodeResult.results.Count == 0)
                 {

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FoodTruckMvc.Data;
-using FoodTruckMvc.Geocoder;
 
 namespace FoodTruckMvc
 {
@@ -36,8 +35,6 @@ namespace FoodTruckMvc
             services.AddDbContext<FoodTruckContext>(options => options
                 .UseSqlServer(this.Configuration.GetConnectionString("FoodTruckConnectionString"))
             );
-
-            services.AddSingleton<IGeocoder, GoogleGeocoder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
