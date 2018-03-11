@@ -25,6 +25,7 @@ namespace FoodTruckMvcTests
         {
             var location = new LocationModel()
             {
+                Name = "Imaginary Spot",
                 StreetAddress = "1313 Mockingbird Ln",
                 City = "Keflavik",
                 State = "CZ",
@@ -42,6 +43,7 @@ namespace FoodTruckMvcTests
         {
             var location = new LocationModel()
             {
+                Name = "Prime Spot",
                 StreetAddress = "777 E Wisconsin Ave",
                 City = "Milwaukee",
                 State = "WI",

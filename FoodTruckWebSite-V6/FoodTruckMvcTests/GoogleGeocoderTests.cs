@@ -15,7 +15,6 @@ namespace FoodTruckMvcTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
             this.Configuration = builder.Build();
         }
 

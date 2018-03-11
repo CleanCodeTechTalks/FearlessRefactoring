@@ -23,11 +23,9 @@ namespace FoodTruckMvcTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
             this.Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
-
             Context = new FoodTruckContext(optionsBuilder.UseInMemoryDatabase(databaseName: "FoodTruckDemo").Options);
         }
 
@@ -37,7 +35,7 @@ namespace FoodTruckMvcTests
         [Fact]
         public void LocationsControllerDoesNotReturnAddressIfAddressNotFound()
         {
-            var location = new LocationModel()
+            var badLocation = new LocationModel
             {
                 Name = "Imaginary Spot",
                 StreetAddress = "1313 Mockingbird Ln",
@@ -50,10 +48,10 @@ namespace FoodTruckMvcTests
                 results = Enumerable.Empty<Result>().ToList()
             };
             var mockGeocoder = new Mock<IGeocoder>();
-            mockGeocoder.Setup(g => g.GetGeocodeAsync(location)).Returns(Task.FromResult(badGeocode));
+            mockGeocoder.Setup(g => g.GetGeocodeAsync(badLocation)).Returns(Task.FromResult(badGeocode));
 
             var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
-            var result = locationsController.Create(location).Result as ViewResult;
+            var result = locationsController.Create(badLocation).Result as ViewResult;
 
             Assert.Equal("This address could not be found. Please check this address and try again!",
                          result.ViewData["Error"]);
@@ -62,7 +60,7 @@ namespace FoodTruckMvcTests
         [Fact]
         public void LocationsControllerShouldNotPersistTheSameLocationTwice()
         {
-            var location = new LocationModel()
+            var location = new LocationModel
             {
                 Name = "Prime Spot",
                 StreetAddress = "777 E Wisconsin Ave",
