@@ -3,6 +3,7 @@ If you're following along, you will need
 * Access to a SQL Server instance - I'm running the developer edition locally.
 * You will need to request a free API key for the Google geocode API
   - https://maps.googleapis.com/maps/api/geocode
+  - Go here to request the key: https://console.developers.google.com/apis/dashboard
 
 
 V1 -> V2

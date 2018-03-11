@@ -19,11 +19,9 @@ namespace FoodTruckMvcTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
             this.Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
-
             Context = new FoodTruckContext(optionsBuilder.UseInMemoryDatabase(databaseName: "FoodTruckDemo").Options);
         }
 
@@ -33,10 +31,7 @@ namespace FoodTruckMvcTests
         [Fact]
         public void LocationsControllerDoesNotReturnAddressIfAddressNotFound()
         {
-            var geocoder = new GoogleGeocoder(Configuration);
-            var locationsController = new LocationsController(Configuration, Context, geocoder);
-
-            var location = new LocationModel()
+            var badLocation = new LocationModel
             {
                 Name = "Imaginary Spot",
                 StreetAddress = "1313 Mockingbird Ln",
@@ -44,7 +39,10 @@ namespace FoodTruckMvcTests
                 State = "CZ",
                 ZipCode = "98765"
             };
-            var result = locationsController.Create(location).Result as ViewResult;
+            var geocoder = new GoogleGeocoder(Configuration);
+            var locationsController = new LocationsController(Configuration, Context, geocoder);
+
+            var result = locationsController.Create(badLocation).Result as ViewResult;
 
             Assert.Equal("This address could not be found. Please check this address and try again!",
                          result.ViewData["Error"]);
@@ -53,9 +51,7 @@ namespace FoodTruckMvcTests
         [Fact]
         public void LocationsControllerShouldNotPersistTheSameLocationTwice()
         {
-            var geocoder = new GoogleGeocoder(Configuration);
-            var locationsController = new LocationsController(Configuration, Context, geocoder);
-            var location = new LocationModel()
+            var location = new LocationModel
             {
                 Name = "Prime Spot",
                 StreetAddress = "777 E Wisconsin Ave",
@@ -63,6 +59,9 @@ namespace FoodTruckMvcTests
                 State = "WI",
                 ZipCode = "53202"
             };
+            var geocoder = new GoogleGeocoder(Configuration);
+            var locationsController = new LocationsController(Configuration, Context, geocoder);
+
             var result = locationsController.Create(location).Result as ViewResult;
             result = locationsController.Create(location).Result as ViewResult;
 
