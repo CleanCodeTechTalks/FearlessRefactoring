@@ -25,7 +25,7 @@ namespace FoodTruckMvc.Controllers
 
         private IConfiguration Configuration;
         private LocationRepository Repository;
-        public IGeocoder Geocoder { get; }
+        private IGeocoder Geocoder;
 
         // GET: Locations
         public ActionResult Index()
