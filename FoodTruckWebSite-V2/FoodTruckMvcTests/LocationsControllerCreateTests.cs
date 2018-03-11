@@ -49,7 +49,7 @@ namespace FoodTruckMvcTests
         [Fact]
         public void LocationsControllerShouldNotPersistTheSameLocationTwice()
         {
-            var location = new LocationModel()
+            var location = new LocationModel
             {
                 Name = "Prime Spot",
                 StreetAddress = "777 E Wisconsin Ave",
