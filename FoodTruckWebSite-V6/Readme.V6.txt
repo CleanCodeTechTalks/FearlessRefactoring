@@ -1,2 +1,0 @@
-NuGet packages
-Microsoft.EntityFrameworkCore.InMemory
