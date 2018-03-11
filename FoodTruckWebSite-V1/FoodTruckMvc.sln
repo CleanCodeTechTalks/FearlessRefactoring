@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckMvc", "FoodTruckMvc\FoodTruckMvc.csproj", "{5C44736C-CB56-4A90-8E80-CB9CDC3BA55E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C1379541-87A6-4F03-A6C7-1CC906F54E3E}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.V1.txt = ReadMe.V1.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		David|Any CPU = David|Any CPU
