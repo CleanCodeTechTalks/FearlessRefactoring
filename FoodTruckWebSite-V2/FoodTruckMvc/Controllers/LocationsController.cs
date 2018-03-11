@@ -14,24 +14,24 @@ namespace FoodTruckMvc.Controllers
     {
         public LocationsController(IConfiguration configuration, FoodTruckContext foodTruckContext)
         {
-            this.Configuration = configuration;
-            this.locationRepository = new LocationRepository(foodTruckContext);
+            Configuration = configuration;
+            Repository = new LocationRepository(foodTruckContext);
         }
 
         private IConfiguration Configuration;
-        private LocationRepository locationRepository;
+        private LocationRepository Repository;
 
         // GET: Locations
         public ActionResult Index()
         {
-            var locations = locationRepository.GetLocations();
+            var locations = Repository.GetLocations();
             return View(locations);
         }
 
         // GET: Locations/Details/5
         public ActionResult Details(int id)
         {
-            var location = locationRepository.GetLocation(id);
+            var location = Repository.GetLocation(id);
 
             if (location == null)
             {
@@ -73,7 +73,7 @@ namespace FoodTruckMvc.Controllers
 
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
-                var existingAddres = locationRepository.GetLocationByFormattedAddress(formattedAddress);
+                var existingAddres = Repository.GetLocationByFormattedAddress(formattedAddress);
                 if (existingAddres != null)
                 {
                     ViewBag.Error = "The given address already exists. Enter a new address";
@@ -88,12 +88,13 @@ namespace FoodTruckMvc.Controllers
                 newLocation.ZipCode = location.ZipCode;
                 newLocation.FormattedAddress = formattedAddress;
 
-                locationRepository.CreateLocation(newLocation);
+                Repository.CreateLocation(newLocation);
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
+                Console.Error.WriteLine(ex.Message);
                 return View();
             }
         }
@@ -101,7 +102,7 @@ namespace FoodTruckMvc.Controllers
         // GET: Locations/Edit/5
         public ActionResult Edit(int id)
         {
-            var location = locationRepository.GetLocation(id);
+            var location = Repository.GetLocation(id);
 
             return View(location);
         }
@@ -113,7 +114,7 @@ namespace FoodTruckMvc.Controllers
         {
             try
             {
-                var current = locationRepository.GetLocation(id);
+                var current = Repository.GetLocation(id);
 
                 if (current == null)
                 {
@@ -131,7 +132,7 @@ namespace FoodTruckMvc.Controllers
 
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
-                var existingAddres = locationRepository.GetLocationByFormattedAddress(formattedAddress);
+                var existingAddres = Repository.GetLocationByFormattedAddress(formattedAddress);
                 if (existingAddres != null)
                 {
                     ViewBag["Error"] = "The given address already exists. Enter a new address";
@@ -145,12 +146,13 @@ namespace FoodTruckMvc.Controllers
                 current.ZipCode = location.ZipCode;
                 current.FormattedAddress = $"{location.StreetAddress} {location.City} {location.State}";
 
-                locationRepository.UpdateLocation(current);
+                Repository.UpdateLocation(current);
 
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
+                Console.Error.WriteLine(ex.Message);
                 return View(location);
             }
         }
