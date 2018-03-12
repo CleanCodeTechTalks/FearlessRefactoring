@@ -23,10 +23,13 @@ namespace FoodTruckMvcTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
-            Context = new FoodTruckContext(optionsBuilder.UseInMemoryDatabase(databaseName: "FoodTruckDemo").Options);
+            Context = new FoodTruckContext(
+                optionsBuilder
+                .UseInMemoryDatabase(databaseName: "FoodTruckDemo")
+                .Options);
         }
 
         private IConfiguration Configuration;
@@ -53,8 +56,9 @@ namespace FoodTruckMvcTests
             var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
             var result = locationsController.Create(badLocation).Result as ViewResult;
 
-            Assert.Equal("This address could not be found. Please check this address and try again!",
-                         result.ViewData["Error"]);
+            Assert.Equal(
+                "This address could not be found. Please check this address and try again!",
+                result.ViewData["Error"]);
         }
 
         [Fact]
