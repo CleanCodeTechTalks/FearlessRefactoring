@@ -12,6 +12,7 @@ Adding a Test Project
 
 File / New / Project
 	.Net Core / XUnit Test	FoodTruckMvcTests
+Add a reference to the FoodTruckMvc project
 Add NuGet packages:
     Microsoft.Extensions.Configuration
     Microsoft.Extensions.Configuration.FileExtensions

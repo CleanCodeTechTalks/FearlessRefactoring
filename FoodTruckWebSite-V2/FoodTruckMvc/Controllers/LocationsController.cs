@@ -94,7 +94,7 @@ namespace FoodTruckMvc.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
@@ -152,7 +152,7 @@ namespace FoodTruckMvc.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                ViewBag.Error = ex.Message;
                 return View(location);
             }
         }
