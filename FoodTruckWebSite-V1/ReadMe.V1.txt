@@ -21,9 +21,9 @@ Add NuGet packages:
 Class LocationsControllerCreateTests
 
 Constructor
-	Configuration
-	Context
+	1. Configuration
+	2. Context
 
 Test business logic in the Create method of the LocationsController with
-	LocationsControllerDoesNotReturnAddressIfAddressNotFound
-	LocationsControllerShouldNotPersistTheSameLocationTwice
+	1. LocationsControllerDoesNotReturnAddressIfAddressNotFound
+	2. LocationsControllerShouldNotPersistTheSameLocationTwice
