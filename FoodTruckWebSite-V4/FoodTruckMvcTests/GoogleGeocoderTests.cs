@@ -15,8 +15,7 @@ namespace FoodTruckMvcTests
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.Development.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
         }
 
         private IConfiguration Configuration;
@@ -26,6 +25,7 @@ namespace FoodTruckMvcTests
         {
             var location = new LocationModel()
             {
+                Name = "Imaginary Spot",
                 StreetAddress = "1313 Mockingbird Ln",
                 City = "Keflavik",
                 State = "CZ",
@@ -43,6 +43,7 @@ namespace FoodTruckMvcTests
         {
             var location = new LocationModel()
             {
+                Name = "Prime Spot",
                 StreetAddress = "777 E Wisconsin Ave",
                 City = "Milwaukee",
                 State = "WI",
