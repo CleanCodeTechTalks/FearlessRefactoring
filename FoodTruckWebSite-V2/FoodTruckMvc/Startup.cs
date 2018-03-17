@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FoodTruckMvc.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using FoodTruckMvc.Data;
 
 namespace FoodTruckMvc
 {
@@ -21,8 +17,8 @@ namespace FoodTruckMvc
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            this.Configuration = builder.Build();
-            configuration = this.Configuration;
+            Configuration = builder.Build();
+            configuration = Configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -33,7 +29,7 @@ namespace FoodTruckMvc
             services.AddMvc();
 
             services.AddDbContext<FoodTruckContext>(options => options
-                .UseSqlServer(this.Configuration.GetConnectionString("FoodTruckConnectionString"))
+                .UseSqlServer(Configuration.GetConnectionString("FoodTruckConnectionString"))
             );
         }
 
