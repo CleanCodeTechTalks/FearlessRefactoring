@@ -1,25 +1,11 @@
 using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using Xunit;
 
 namespace FoodTruckMvcTests
 {
-    public class GoogleGeocoderTests
+    public class GoogleGeocoderTests : FoodTruckMvcBaseConfiguration
     {
-        public GoogleGeocoderTests()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
-        private IConfiguration Configuration;
-
         [Fact]
         public void GetGeocodeDoesNotFindInvalidAddress()
         {

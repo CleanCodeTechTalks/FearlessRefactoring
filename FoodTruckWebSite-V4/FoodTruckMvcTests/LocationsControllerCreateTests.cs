@@ -3,23 +3,14 @@ using FoodTruckMvc.Data;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using Xunit;
 
 namespace FoodTruckMvcTests
 {
-    public class LocationsControllerCreateTests
+    public class LocationsControllerCreateTests : FoodTruckMvcBaseConfiguration
     {
         public LocationsControllerCreateTests()
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
             Context = new FoodTruckContext(
                 optionsBuilder
@@ -27,7 +18,6 @@ namespace FoodTruckMvcTests
                 .Options);
         }
 
-        private IConfiguration Configuration;
         private FoodTruckContext Context;
 
         [Fact]
