@@ -1,9 +1,7 @@
 ﻿using FoodTruckMvc.Controllers;
-using FoodTruckMvc.Data;
 using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +10,8 @@ using Xunit;
 
 namespace FoodTruckMvcTests
 {
-    public class LocationsControllerCreateTests : FoodTruckMvcBaseConfiguration
+    public class LocationsControllerCreateTests : LocationsControllerTests
     {
-        public LocationsControllerCreateTests()
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
-            Context = new FoodTruckContext(
-                optionsBuilder
-                .UseInMemoryDatabase(databaseName: "FoodTruckDemo")
-                .Options);
-        }
-
-        private FoodTruckContext Context;
-
         [Fact]
         public void LocationsControllerDoesNotReturnAddressIfAddressNotFound()
         {
