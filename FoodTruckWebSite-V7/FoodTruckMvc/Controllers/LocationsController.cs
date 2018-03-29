@@ -122,7 +122,7 @@ namespace FoodTruckMvc.Controllers
 
                 if (current == null)
                 {
-                    return RedirectToAction(nameof(Edit), new { id = id });
+                    return RedirectToAction(nameof(Edit), new { id });
                 }
 
                 var apiKey = Configuration["AppSettings:googleMapsApiKey"];

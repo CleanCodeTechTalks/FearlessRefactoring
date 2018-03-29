@@ -14,7 +14,7 @@ namespace FoodTruckMvcTests
     public class LocationsControllerEditTests : LocationsControllerTests
     {
         [Fact]
-        public void LocationsCannotBeEditedBeforeTheyExist()
+        public void LocationsCannotGetLocationsThatDoNotExist()
         {
             var location = new LocationModel
             {
@@ -38,10 +38,10 @@ namespace FoodTruckMvcTests
             mockGeocoder.Setup(g => g.GetGeocodeAsync(location)).Returns(Task.FromResult(geocodeWithGoodAddress));
 
             var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
-            //var result = locationsController.Create(location).Result as ViewResult;
-            var result = locationsController.Edit(1, location).Result as ViewResult;
+            var id = 1;
+            var result = locationsController.Edit(id) as ViewResult;
 
-            Assert.Equal("No location with id {id} exists. Please select a different location to edit",
+            Assert.Equal($"No location with id {id} exists. Please select a different location to edit",
                          result.ViewData["Error"]);
         }
     }
