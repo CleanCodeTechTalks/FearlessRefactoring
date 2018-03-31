@@ -103,6 +103,10 @@ namespace FoodTruckMvc.Controllers
         public ActionResult Edit(int id)
         {
             var location = Repository.GetLocation(id);
+            if (location == null)
+            {
+                ViewBag.Error = $"No location with id {id} exists. Please select a different location to edit";
+            }
 
             return View(location);
         }
@@ -118,8 +122,7 @@ namespace FoodTruckMvc.Controllers
 
                 if (current == null)
                 {
-                    ViewBag["Error"] = $"No location with id {id} exists. Please select a different location to edit";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Edit), new { id });
                 }
 
                 var apiKey = Configuration["AppSettings:googleMapsApiKey"];
