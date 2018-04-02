@@ -125,13 +125,13 @@ namespace FoodTruckMvc.Controllers
                     return RedirectToAction(nameof(Edit), new { id });
                 }
 
-                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
-                var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
-                var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
-                var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
-                var responseString = await response.Content.ReadAsStringAsync();
-                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
+                var geocodeResult = await Geocoder.GetGeocodeAsync(location);
+
+                if (geocodeResult.results.Count == 0)
+                {
+                    ViewBag.Error = "This address could not be found. Please check this address and try again!";
+                    return View(location);
+                }
 
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
