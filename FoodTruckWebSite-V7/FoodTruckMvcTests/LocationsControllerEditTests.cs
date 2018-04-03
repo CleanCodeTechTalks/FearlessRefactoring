@@ -47,7 +47,7 @@ namespace FoodTruckMvcTests
             };
             mockGeocoder.Setup(g => g.GetGeocodeAsync(goodLocation)).Returns(Task.FromResult(geocodeWithGoodAddress));
 
-            var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
+            var locationsController = new LocationsController(null, Context, mockGeocoder.Object);
             var response = await locationsController.Create(goodLocation) as ViewResult;
 
             var badLocation = new LocationModel
