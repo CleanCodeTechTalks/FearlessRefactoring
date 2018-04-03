@@ -24,7 +24,7 @@ namespace FoodTruckMvcTests
         }
 
         [Fact]
-        public void CannotMakeExistingLocationsInvalid()
+        public async Task CannotMakeExistingLocationsInvalidAsync()
         {
             var goodLocation = new LocationModel
             {
@@ -48,7 +48,7 @@ namespace FoodTruckMvcTests
             mockGeocoder.Setup(g => g.GetGeocodeAsync(goodLocation)).Returns(Task.FromResult(geocodeWithGoodAddress));
 
             var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
-            var result = locationsController.Create(goodLocation).Result as ViewResult;
+            var response = await locationsController.Create(goodLocation) as ViewResult;
 
             var badLocation = new LocationModel
             {
@@ -64,11 +64,11 @@ namespace FoodTruckMvcTests
             };
             mockGeocoder.Setup(g => g.GetGeocodeAsync(badLocation)).Returns(Task.FromResult(badGeocode));
 
-            result = locationsController.Edit(1, badLocation).Result as ViewResult;
+            response = await locationsController.Edit(1, badLocation) as ViewResult;
 
             Assert.Equal(
                 "This address could not be found. Please check this address and try again!",
-                result.ViewData["Error"]);
+                response.ViewData["Error"]);
         }
     }
 }
