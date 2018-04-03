@@ -30,7 +30,7 @@ namespace FoodTruckMvcTests
             var mockGeocoder = new Mock<IGeocoder>();
             mockGeocoder.Setup(g => g.GetGeocodeAsync(badLocation)).Returns(Task.FromResult(badGeocode));
 
-            var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
+            var locationsController = new LocationsController(null, Context, mockGeocoder.Object);
             var result = await locationsController.Create(badLocation) as ViewResult;
 
             Assert.Equal(
@@ -62,7 +62,7 @@ namespace FoodTruckMvcTests
             };
             mockGeocoder.Setup(g => g.GetGeocodeAsync(location)).Returns(Task.FromResult(geocodeWithGoodAddress));
 
-            var locationsController = new LocationsController(Configuration, Context, mockGeocoder.Object);
+            var locationsController = new LocationsController(null, Context, mockGeocoder.Object);
             var result = await locationsController.Create(location) as ViewResult;
             result = await locationsController.Create(location) as ViewResult;
 
