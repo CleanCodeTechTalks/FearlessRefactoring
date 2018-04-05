@@ -3,6 +3,7 @@ using FoodTruckMvc.Data;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FoodTruckMvcTests
@@ -21,7 +22,7 @@ namespace FoodTruckMvcTests
         private FoodTruckContext Context;
 
         [Fact]
-        public void LocationsControllerDoesNotReturnAddressIfAddressNotFound()
+        public async Task LocationsControllerDoesNotReturnAddressIfAddressNotFound()
         {
             var badLocation = new LocationModel
             {
@@ -33,7 +34,7 @@ namespace FoodTruckMvcTests
             };
 
             var locationsController = new LocationsController(Configuration, Context);
-            var result = locationsController.Create(badLocation).Result as ViewResult;
+            var result = await locationsController.Create(badLocation) as ViewResult;
 
             Assert.Equal(
                 "This address could not be found. Please check this address and try again!",
@@ -41,7 +42,7 @@ namespace FoodTruckMvcTests
         }
 
         [Fact]
-        public void LocationsControllerShouldNotPersistTheSameLocationTwice()
+        public async Task LocationsControllerShouldNotPersistTheSameLocationTwice()
         {
             var location = new LocationModel
             {
@@ -53,8 +54,8 @@ namespace FoodTruckMvcTests
             };
 
             var locationsController = new LocationsController(Configuration, Context);
-            var result = locationsController.Create(location).Result as ViewResult;
-            result = locationsController.Create(location).Result as ViewResult;
+            var result = await locationsController.Create(location) as ViewResult;
+            result = await locationsController.Create(location) as ViewResult;
 
             Assert.Equal("The given address already exists. Enter a new address",
                          result.ViewData["Error"]);

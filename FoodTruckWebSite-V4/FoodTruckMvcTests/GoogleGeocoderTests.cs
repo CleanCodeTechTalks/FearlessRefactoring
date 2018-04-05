@@ -1,5 +1,6 @@
 using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace FoodTruckMvcTests
@@ -7,7 +8,7 @@ namespace FoodTruckMvcTests
     public class GoogleGeocoderTests : FoodTruckMvcBaseConfiguration
     {
         [Fact]
-        public void GetGeocodeDoesNotFindInvalidAddress()
+        public async Task GetGeocodeDoesNotFindInvalidAddressAsync()
         {
             var location = new LocationModel()
             {
@@ -19,13 +20,13 @@ namespace FoodTruckMvcTests
             };
             var geocoder = new GoogleGeocoder(Configuration);
 
-            var geocode = geocoder.GetGeocodeAsync(location).Result;
+            var geocode = await geocoder.GetGeocodeAsync(location);
 
             Assert.Empty(geocode.results);
         }
 
         [Fact]
-        public void GetGeocodeFindsValidAddress()
+        public async Task GetGeocodeFindsValidAddress()
         {
             var location = new LocationModel()
             {
@@ -37,7 +38,7 @@ namespace FoodTruckMvcTests
             };
             var geocoder = new GoogleGeocoder(Configuration);
 
-            var geocode = geocoder.GetGeocodeAsync(location).Result;
+            var geocode = await geocoder.GetGeocodeAsync(location);
 
             Assert.Single(geocode.results);
         }

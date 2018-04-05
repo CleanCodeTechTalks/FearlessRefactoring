@@ -133,6 +133,12 @@ namespace FoodTruckMvc.Controllers
                 var responseString = await response.Content.ReadAsStringAsync();
                 var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
 
+                if (geocodeResult.results.Count == 0)
+                {
+                    ViewBag.Error = "This address could not be found. Please check this address and try again!";
+                    return View(location);
+                }
+
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
                 var existingAddres = Repository.GetLocationByFormattedAddress(formattedAddress);
