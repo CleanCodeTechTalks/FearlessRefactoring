@@ -12,7 +12,9 @@ namespace FoodTruckMvc.Controllers
 {
     public class LocationsController : Controller
     {
-        public LocationsController(IConfiguration configuration, FoodTruckContext foodTruckContext)
+        public LocationsController(
+            IConfiguration configuration,
+            FoodTruckContext foodTruckContext)
         {
             Configuration = configuration;
             Repository = new LocationRepository(foodTruckContext);
@@ -103,6 +105,10 @@ namespace FoodTruckMvc.Controllers
         public ActionResult Edit(int id)
         {
             var location = Repository.GetLocation(id);
+            if (location == null)
+            {
+                ViewBag.Error = $"No location with id {id} exists. Please select a different location to edit";
+            }
 
             return View(location);
         }
@@ -118,8 +124,7 @@ namespace FoodTruckMvc.Controllers
 
                 if (current == null)
                 {
-                    ViewBag["Error"] = $"No location with id {id} exists. Please select a different location to edit";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Edit), new { id });
                 }
 
                 var apiKey = Configuration["AppSettings:googleMapsApiKey"];
@@ -129,6 +134,12 @@ namespace FoodTruckMvc.Controllers
                 var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
                 var responseString = await response.Content.ReadAsStringAsync();
                 var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
+
+                if (geocodeResult.results.Count == 0)
+                {
+                    ViewBag.Error = "This address could not be found. Please check this address and try again!";
+                    return View(location);
+                }
 
                 var formattedAddress = geocodeResult.results[0].formatted_address;
 
