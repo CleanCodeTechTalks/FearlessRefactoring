@@ -94,7 +94,7 @@ namespace FoodTruckMvc.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }
@@ -144,7 +144,7 @@ namespace FoodTruckMvc.Controllers
                 var existingAddres = Repository.GetLocationByFormattedAddress(formattedAddress);
                 if (existingAddres != null)
                 {
-                    ViewBag["Error"] = "The given address already exists. Enter a new address";
+                    ViewBag.Error = "The given address already exists. Enter a new address";
                     return View(location);
                 }
 
@@ -161,7 +161,7 @@ namespace FoodTruckMvc.Controllers
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                ViewBag.Error = ex.Message;
                 return View(location);
             }
         }
