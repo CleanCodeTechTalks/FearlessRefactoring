@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
-using FoodTruckMvc.Models;
-using FoodTruckMvc.Data;
+using System;
+using System.Diagnostics;
 
 namespace FoodTruckMvc.Controllers
 {
     public class HomeController : Controller
     {
-
-
-
-
         public IActionResult Index(DateTime? startDate = null, DateTime? endDate = null)
         {
 

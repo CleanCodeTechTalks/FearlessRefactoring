@@ -28,14 +28,14 @@ namespace FoodTruckMvc.Controllers
         private IGeocoder Geocoder;
 
         // GET: Locations
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var locations = Repository.GetLocations();
             return View(locations);
         }
 
         // GET: Locations/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var location = Repository.GetLocation(id);
 
@@ -49,7 +49,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: Locations/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             var location = new LocationModel();
 
@@ -59,7 +59,7 @@ namespace FoodTruckMvc.Controllers
         // POST: Locations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(LocationModel location)
+        public async Task<IActionResult> Create(LocationModel location)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: Locations/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             var location = Repository.GetLocation(id);
             if (location == null)
@@ -114,7 +114,7 @@ namespace FoodTruckMvc.Controllers
         // POST: Locations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, LocationModel location)
+        public async Task<IActionResult> Edit(int id, LocationModel location)
         {
             try
             {

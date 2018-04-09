@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FoodTruckMvc.Data;
+using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using FoodTruckMvc.Data;
-using FoodTruckMvc.Models;
 
 namespace FoodTruckMvc.Controllers
 {
@@ -19,7 +15,7 @@ namespace FoodTruckMvc.Controllers
         private FoodTruckRepository foodTruckRepository;
 
         // GET: FoodTrucks
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var foodTrucks = this.foodTruckRepository.GetFoodTrucks();
 
@@ -27,7 +23,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: FoodTrucks/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var foodTruck = this.foodTruckRepository.GetFoodTruckById(id);
 
@@ -35,7 +31,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: FoodTrucks/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             var model = new FoodTruckModel();
             return View(model);
@@ -44,7 +40,7 @@ namespace FoodTruckMvc.Controllers
         // POST: FoodTrucks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FoodTruckModel model)
+        public IActionResult Create(FoodTruckModel model)
         {
             try
             {
@@ -59,7 +55,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: FoodTrucks/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             var foodTruck = this.foodTruckRepository.GetFoodTruckById(id);
 
@@ -69,7 +65,7 @@ namespace FoodTruckMvc.Controllers
         // POST: FoodTrucks/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, FoodTruckModel model)
+        public IActionResult Edit(int id, FoodTruckModel model)
         {
             try
             {
@@ -85,7 +81,7 @@ namespace FoodTruckMvc.Controllers
         }
 
         // GET: FoodTrucks/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -93,7 +89,7 @@ namespace FoodTruckMvc.Controllers
         // POST: FoodTrucks/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
