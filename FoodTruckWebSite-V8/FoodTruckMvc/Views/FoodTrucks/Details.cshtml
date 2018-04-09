@@ -1,0 +1,49 @@
+﻿@model FoodTruckMvc.Models.FoodTruckModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Food truck Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FoodTruckId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FoodTruckId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Website)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Website)
+        </dd>
+    </dl>
+</div>
+<div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FoodTruckId }, new { @class = "btn btn-info" })
+    </p>
+    <p>
+        @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-info" })
+    </p>
+    
+
+    
+
+</div>

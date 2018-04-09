@@ -1,4 +1,5 @@
 ﻿using FoodTruckMvc.Data;
+using FoodTruckMvc.Geocoder;
 using FoodTruckMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,14 +15,17 @@ namespace FoodTruckMvc.Controllers
     {
         public LocationsController(
             IConfiguration configuration,
-            FoodTruckContext foodTruckContext)
+            FoodTruckContext foodTruckContext,
+            IGeocoder geocoder)
         {
             Configuration = configuration;
+            Geocoder = geocoder;
             Repository = new LocationRepository(foodTruckContext);
         }
 
         private IConfiguration Configuration;
         private LocationRepository Repository;
+        private IGeocoder Geocoder;
 
         // GET: Locations
         public ActionResult Index()
@@ -55,17 +59,11 @@ namespace FoodTruckMvc.Controllers
         // POST: Locations/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LocationModel location)
+        public async Task<ActionResult> Create(LocationModel location)
         {
             try
             {
-                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
-                var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
-                var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
-                var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
-                var responseString = await response.Content.ReadAsStringAsync();
-                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
+                var geocodeResult = await Geocoder.GetGeocodeAsync(location);
 
                 if (geocodeResult.results.Count == 0)
                 {
@@ -127,13 +125,7 @@ namespace FoodTruckMvc.Controllers
                     return RedirectToAction(nameof(Edit), new { id });
                 }
 
-                var apiKey = Configuration["AppSettings:googleMapsApiKey"];
-                var httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/geocode/json");
-                var addressString = WebUtility.UrlEncode($"{location.StreetAddress} {location.City} {location.State}");
-                var response = await httpClient.GetAsync($"?address={addressString}&key={apiKey}");
-                var responseString = await response.Content.ReadAsStringAsync();
-                var geocodeResult = JsonConvert.DeserializeObject<GoogleGeocodeResponse>(responseString);
+                var geocodeResult = await Geocoder.GetGeocodeAsync(location);
 
                 if (geocodeResult.results.Count == 0)
                 {
