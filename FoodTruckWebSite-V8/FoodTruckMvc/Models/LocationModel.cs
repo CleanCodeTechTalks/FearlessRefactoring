@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodTruckMvc.Models
 {
     public class LocationModel
     {
-
         [Key]
         public int LocationId { get; set; }
 
@@ -23,6 +19,5 @@ namespace FoodTruckMvc.Models
         public String ZipCode { get; set; }
 
         public String FormattedAddress { get; set; }
-
     }
 }
