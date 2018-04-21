@@ -1,5 +1,6 @@
 ﻿using FoodTruckMvc.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace FoodTruckMvcTests
 {
@@ -10,7 +11,7 @@ namespace FoodTruckMvcTests
             var optionsBuilder = new DbContextOptionsBuilder<FoodTruckContext>();
             Context = new FoodTruckContext(
                 optionsBuilder
-                .UseInMemoryDatabase(databaseName: "FoodTruckDemo")
+                .UseInMemoryDatabase(databaseName: $"{Guid.NewGuid()}")
                 .Options);
         }
         protected FoodTruckContext Context;
